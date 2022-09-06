@@ -1,0 +1,38 @@
+﻿CREATE TABLE "categoria" (
+  "cod_categoria" smallint,
+  "descricao" varchar(80),
+  PRIMARY KEY ("cod_categoria")
+);
+
+CREATE TABLE "livro" (
+  "isbn" varchar(13),
+  "título" varchar(20),
+  "ano" smallint,
+  "editora" varchar(10),
+  "autores" varchar(60),
+  "cod_cat" smallint,
+  PRIMARY KEY ("isbn"),
+  CONSTRAINT "FK_livro.cod_cat"
+    FOREIGN KEY ("cod_cat")
+      REFERENCES "categoria"("cod_categoria")
+);
+
+CREATE TABLE "autores" (
+  "codigo" smallint,
+  "nome" varchar(60),
+  "nacionalidade" varchar(15),
+  PRIMARY KEY ("codigo")
+);
+
+CREATE TABLE "autor_livro" (
+  "cod_autor" smallint,
+  "isbn" varchar(13),
+  PRIMARY KEY ("cod_autor", "isbn"),
+  CONSTRAINT "FK_autor_livro.isbn"
+    FOREIGN KEY ("isbn")
+      REFERENCES "livro"("isbn"),
+  CONSTRAINT "FK_autor_livro.cod_autor"
+    FOREIGN KEY ("cod_autor")
+      REFERENCES "autores"("codigo")
+);
+

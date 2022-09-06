@@ -1,0 +1,58 @@
+﻿CREATE TABLE "mae" (
+  "nome" varchar(40),
+  "dt_nascimento" date,
+  "telefone" varchar(11),
+  "endereco" varchar(60),
+  "codigo" int,
+  PRIMARY KEY ("codigo")
+);
+
+CREATE TABLE "medico" (
+  "crm" varchar(8),
+  "nome" varchar(40),
+  "telefone" varchar(11),
+  "especializacao" varchar(60),
+  PRIMARY KEY ("crm")
+);
+
+CREATE TABLE "parto" (
+  "crm_medico" varchar(8),
+  "cod_mae" int,
+  "data" date,
+  PRIMARY KEY ("crm_medico", "cod_mae"),
+  CONSTRAINT "FK_parto.cod_mae"
+    FOREIGN KEY ("cod_mae")
+      REFERENCES "mae"("codigo"),
+  CONSTRAINT "FK_parto.crm_medico"
+    FOREIGN KEY ("crm_medico")
+      REFERENCES "medico"("crm")
+);
+
+CREATE TABLE "quarto" (
+  "numero" smallint,
+  "descricao" varchar(10),
+  PRIMARY KEY ("numero")
+);
+
+CREATE TABLE "crianca" (
+  "nome" varchar(40),
+  "dt_nasc" date,
+  "hr_nasc" time,
+  "peso" float4,
+  "altura" float4,
+  "codigo" int,
+  "crm" varchar(8),
+  "cod_mae" int,
+  "num_quarto" smallint,
+  PRIMARY KEY ("codigo"),
+  CONSTRAINT "FK_crianca.crm"
+    FOREIGN KEY ("crm","cod_mae")
+      REFERENCES "parto"("crm_medico","cod_mae"),
+  CONSTRAINT "FK_crianca.num_quarto"
+    FOREIGN KEY ("num_quarto")
+      REFERENCES "quarto"("numero")
+  --CONSTRAINT "FK_crianca.cod_mae"
+    --FOREIGN KEY ("cod_mae")
+      --REFERENCES "parto"("cod_mae")
+);
+
