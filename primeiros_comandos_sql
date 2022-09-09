@@ -1,0 +1,12 @@
+﻿CREATE TABLE cliente( --CADA LINHA ABAIXO É UMA COLUNA(CAMPO)
+	cpf NUMERIC(11,0) PRIMARY KEY,
+	rg NUMERIC(14,0) UNIQUE NOT NULL,  --NOT NULL obriga o preenchimento do campo. ; UNIQUE significa q aquele valor do campo nao pode ser repetido.
+	nome varchar(30) NOT NULL,
+	data_nascimento date NOT NULL
+);
+
+INSERT INTO cliente(cpf, rg, nome, data_nascimento) -- INSERT INTO uso para inserir dados na tabela.
+VALUES(111,1234,'Ana Maria', '12/03/2000');
+
+INSERT INTO cliente(cpf, rg, nome, data_nascimento)
+VALUES(222,12345, 'Maria Paula', '11/09/2001');
