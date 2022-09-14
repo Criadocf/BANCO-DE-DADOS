@@ -37,6 +37,7 @@ CREATE TABLE cliente (
 	REFERENCES endereco(idEnderecos)
 );
 
+
 CREATE TABLE loja(
 	numero_loja INTEGER PRIMARY KEY,
 	endereco INTEGER,
@@ -44,4 +45,62 @@ CREATE TABLE loja(
 	telefone_contato INTEGER,
 	CONSTRAINT loja_endereco FOREIGN KEY(endereco)
 	REFERENCES endereco(idEnderecos)
-)
+);
+
+CREATE TABLE mercadoria(
+	codigo INT PRIMARY KEY,
+	tipo_mercadoria INTEGER,
+	descricao VARCHAR(300),
+	preco_vendas FLOAT,
+	CONSTRAINT mercadoria_tipo_mercadoria FOREIGN KEY(tipo_mercadoria)
+	REFERENCES tipo_mercadoria(idTipoMercadoria)
+);
+
+CREATE TABLE loja_mercadoria(
+	loja INTEGER,
+	mercadoria INTEGER,
+	quantidade INTEGER,
+	PRIMARY KEY(loja, mercadoria),
+	CONSTRAINT loja_mercadoria_loja FOREIGN KEY (loja)
+	REFERENCES loja(numero_loja),
+	CONSTRAINT loja_mercadoria_mercadoria FOREIGN KEY(mercadoria)
+	REFERENCES mercadoria(codigo)
+);
+
+CREATE TABLE pedidos_mercadorias(
+	pedido INTEGER,
+	loja INTEGER,
+	mercadoria INTEGER,
+	status INTEGER,
+	quantidade_pedida INTEGER,
+	data_entrega DATE,
+	valor_unitario FLOAT,
+	PRIMARY KEY(pedido, loja, mercadoria),
+	CONSTRAINT pedido_mercadorias_pedidos FOREIGN KEY(pedido)
+	REFERENCES pedidos(numeros_pedidos),
+	CONSTRAINT pedidos_mercadorias_loja_mercadoria FOREIGN KEY(loja)
+	REFERENCES loja_mercadoria(loja),
+	CONSTRAINT pedidos_mercadoria_loja_mercadoria2 FOREIGN KEY(mercadoria)
+	REFERENCES loja_mercadoria(mercadoria),
+	CONSTRAINT pedidos_mercadoria_status_pedido FOREIGN KEY (status)
+	REFERENCES status_pedido(idStatus_pedido)
+);
+
+
+CREATE TABLE pedidos(
+	numeros_pedidos INTEGER PRIMARY KEY,
+	cliente_email VARCHAR(50),
+	endereco_entrega INTEGER,
+	forma_pagamento INTEGER,
+	status_pedido INTEGER,
+	data_expedicao DATE,
+	valor_total FLOAT,
+	CONSTRAINT pedidos_cliente FOREIGN KEY(cliente_email)
+	REFERENCES cliente(email),
+	CONSTRAINT pedidos_endereco FOREIGN KEY(endereco_entrega)
+	REFERENCES endereco(idEnderecos),
+	CONSTRAINT pedidos_forma_pagamento FOREIGN KEY(forma_pagamento)
+	REFERENCES forma_pagamento(idFormaPag),
+	CONSTRAINT pedidos_status_pedido FOREIGN KEY(status_pedido)
+	REFERENCES status_pedido(idStatus_pedido)
+);
