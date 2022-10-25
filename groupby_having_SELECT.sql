@@ -1,0 +1,23 @@
+﻿--Aula falando sobre GROUP BY e HAVING.
+
+--QUAL A QUANTIDADE DE LIVROS POR AUTOR?
+SELECT nome, COUNT(*)
+	FROM livros INNER JOIN autoreslivros USING(isbn) --MESMO SEM USAR A TABELA autoreslivros, TENHO QUE USAR O INNER JOIN com ela, POIS ELA FAZ A LIGAÇÃO ENTRE AS DUAS TABELAS QUE FORAM USADAS(livros e autores)
+	INNER JOIN autores USING(cod_autor)
+GROUP BY nome;
+
+-- QUAL A QUANTIDADE DE CLIENTES POR SEXO?
+SELECT sexo, COUNT(*)
+	FROM clientes
+GROUP BY sexo;
+
+--QUAL A MÉDIA DE VALORES DOS LIVROS POR EDITORA?
+SELECT nome, AVG(preco) Preco_medio
+	FROM livros INNER JOIN editoras USING(cod_editora)
+GROUP BY nome
+ORDER BY Preco_medio;
+
+--QUAIS CLIENTES FIZERAM MAIS DE UM PEDIDO?
+SELECT nome, COUNT(*)
+	FROM clientes INNER JOIN pedidos USING(cod_cliente)
+GROUP BY nome HAVING COUNT(*) > 1;  --WHERE Filtra REGISTROS e HAVING filtra GRUPOS.
