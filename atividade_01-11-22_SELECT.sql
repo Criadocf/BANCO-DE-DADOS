@@ -307,7 +307,7 @@ INSERT INTO clientes (nome, rua, numero, bairro,
 INSERT INTO clientes (nome, rua, numero, bairro, 
                      cidade, uf, cep, telefone, identidade,
                      sexo)
-             VALUES ('Ângela Tóffolo de Queiroz', 'Pandiá Calógeras',
+             VALUES (1,'Ângela Tóffolo de Queiroz', 'Pandiá Calógeras',
                     '580', 'Cabeças', 'Ouro Preto', 'MT', '35400000',
                     '3551-1807', 'M-9.239.019', 'F');
 
@@ -549,16 +549,16 @@ l)     Atualizar o nome do bairro do cadastro do cliente "Gilberto Ribeiro de Qu
 m)  Remover os clientes do estado de Minas Gerais:*/
 
 
---a)
+--a)Obter todos os dados de todos os funcionários:
 SELECT * FROM funcionarios
 
---b)
+--b)Obter todos os dados de todos os clientes:
 SELECT * FROM clientes
 
---c)
+--c)Obter o código, nome e telefone de todos os clientes:
 SELECT cod_cliente, nome, telefone FROM clientes
 
---d)
+--d)Obter os pedidos com total pago maior que R$120,00:
 SELECT * FROM pedidos
 WHERE total_pago > 120
 
@@ -568,7 +568,7 @@ WHERE total_pago > (120/2.50)
 
 --f)Obter os pedidos com total pago maior que R$120,00 do cliente 1, com o valor convertido para dólar ($1,00 = R$2,50):
 SELECT * FROM pedidos
-WHERE cod_cliente = 1 AND total_pago > (120/2.50)
+WHERE cod_cliente = 1
 
 --g) Listar os clientes em ordem alfabética crescente de nomes:
 SELECT * FROM clientes
@@ -590,5 +590,11 @@ WHERE titulo ILIKE 'EnGeNHARIA de SOftwarE'
 SELECT * FROM clientes
 WHERE nome SIMILAR TO '[GIlbertO]%'
 
+--l)Atualizar o nome do bairro do cadastro do cliente "Gilberto Ribeiro de Queiroz" (cod_cliente = 1) para "Jardim da Granja":
+UPDATE clientes
+SET  bairro = 'Jardim da Granja'
+WHERE cod_cliente = 1
 
-
+--m)Remover os clientes do estado de Minas Gerais:
+DELETE FROM clientes
+WHERE uf = 'MG'
