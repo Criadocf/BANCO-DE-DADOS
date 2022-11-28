@@ -1,0 +1,52 @@
+﻿CREATE TABLE cliente(
+	cpf NUMERIC(11) PRIMARY KEY,
+	rg NUMERIC(7) NOT NULL,
+	nome VARCHAR(30) NOT NULL,
+	data_nascimento DATE NOT NULL,
+	ativo BOOLEAN DEFAULT 'true'
+);
+
+ALTER TABLE cliente
+ADD email VARCHAR(50);
+
+ALTER TABLE cliente
+DROP email;
+
+ALTER TABLE cliente
+ALTER COLUMN rg TYPE NUMERIC(14)
+
+ALTER TABLE cliente
+RENAME ativo TO situacao
+
+ALTER TABLE cliente --AQUI EU MUDEI O NOME DA TABELA, E NÃO O NOME DE ALGUM ATRIBUTO DELA, COMO NAS LINHAS DE COMANDA ACIMA.
+RENAME TO clientes;
+
+ALTER TABLE clientes
+ADD CONSTRAINT rg_unico UNIQUE(rg)
+
+INSERT INTO clientes
+VALUES(05277829393, 3110687, 'Kleber de Sousa Júnior', '1993-10-11');
+
+INSERT INTO clientes
+VALUES(05277824390, 3110687, 'André dos Santos', '1992-10-21', false);
+
+ALTER TABLE clientes
+DROP CONSTRAINT rg_unico; --NO CASO AQUI, EU DELETO A 'CONSTRAINT' PELO NOME QUE EU DEI A ELA(rg_unico) NA HORA DE CRIÁ-LA.
+
+ALTER TABLE clientes
+ADD CONSTRAINT rg_unico UNIQUE(rg)
+
+ALTER TABLE clientes
+ALTER COLUMN situacao DROP DEFAULT;
+
+ALTER TABLE clientes
+ADD COLUMN email VARCHAR(50)
+
+INSERT INTO clientes
+VALUES(02312212353, 1231232, 'Marcos Cesar', '1992-10-12', false, 'kleberjr2016@outlook.com')
+
+INSERT INTO clientes
+VALUES(02312212253, 1235232, 'Marcos Cesario de Lima', '1990-10-12', false)
+
+ALTER TABLE clientes
+ALTER COLUMN nome SET NOT NULL
